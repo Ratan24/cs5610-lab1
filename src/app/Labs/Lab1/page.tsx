@@ -287,6 +287,18 @@ export default function Lab1() {
         value="2000-01-21"
         id="wd-text-fields-dob"/><br/>
         </>
+        <>
+          <h4>Anchor tag</h4>
+          Please
+          <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
+          to get dummy text<br/>
+
+          Please check out <a href="https://github.com/Ratan24/cs5610-lab1" target="_blank" rel="noopener noreferrer" id="wd-github">
+              My GitHub Repository
+            </a>
+        </>
+
+        
       </div>
     );
   }
