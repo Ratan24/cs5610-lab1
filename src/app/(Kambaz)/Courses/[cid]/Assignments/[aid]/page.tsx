@@ -115,7 +115,7 @@ export default function AssignmentEditor() {
         </tbody>
       </table>
       <hr />
-      <div style={{ float: "right" }}>
+      <div>
         <button>Cancel</button> <button>Save</button>
       </div>
       <br/><br/>
