@@ -7,7 +7,7 @@ return (
 <input placeholder="password" type="password" className="wd-password" /><br/>
 <input placeholder="verify password"
 type="password" className="wd-password-verify" /><br/>
-<Link href="/Dashboard" > Sign up </Link><br />
+<Link href="Profile" > Sign up </Link><br />
 <Link href="Signin" > Sign in </Link>
 </div>
 );
