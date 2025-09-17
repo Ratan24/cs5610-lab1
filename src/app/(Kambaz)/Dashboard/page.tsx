@@ -8,7 +8,7 @@ return (
 <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="React JS course logo" />
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -20,7 +20,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/2345" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="Node.js course logo" />
             <div>
               <h5> CS2345 Node.js </h5>
               <p className="wd-dashboard-course-title">
@@ -32,7 +32,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/3456" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="MongoDB course logo" />
             <div>
               <h5> CS3456 MongoDB </h5>
               <p className="wd-dashboard-course-title">
@@ -44,7 +44,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/4567" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="Express.js course logo" />
             <div>
               <h5> CS4567 Express.js </h5>
               <p className="wd-dashboard-course-title">
@@ -56,7 +56,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/5678" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="Angular course logo" />
             <div>
               <h5> CS5678 Angular </h5>
               <p className="wd-dashboard-course-title">
@@ -68,7 +68,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/6789" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="Vue.js course logo" />
             <div>
               <h5> CS6789 Vue.js </h5>
               <p className="wd-dashboard-course-title">
@@ -80,7 +80,7 @@ return (
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/7890" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="react" />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="Next.js course logo" />
             <div>
               <h5> CS7890 Next.js </h5>
               <p className="wd-dashboard-course-title">

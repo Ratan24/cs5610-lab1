@@ -10,6 +10,8 @@ export default function CoursesLayout({
   const { cid } = params;
   return (
     <div id="wd-courses">
+      <h2>Courses {cid}</h2>
+      <hr />
       <table>
         <tbody>
           <tr>
