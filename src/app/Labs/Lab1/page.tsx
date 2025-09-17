@@ -1,8 +1,13 @@
 "use client";
+import Link from "next/link";
 export default function Lab1() {
     return (
       <div id="wd-lab1">
         <h2>Lab 1</h2>
+        <h1>Ratan Pyla</h1>
+        <h3>CS5610.19730.202610</h3>
+        <Link href="/Labs/Lab1">Lab 1</Link> | <Link href="/Labs/Lab2">Lab 2</Link> | <Link href="/Labs/Lab3">Lab 3</Link> | <Link href="/">Kambaz</Link>
+        <hr />
         <h3>HTML Examples</h3>
   
         <div id="wd-h-tag">

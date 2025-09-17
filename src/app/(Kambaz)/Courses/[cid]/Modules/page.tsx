@@ -1,8 +1,12 @@
 export default function Modules() {
     return (
     <div>
-    {/* Implement Collapse All button, View Progress button, etc. */}
-    <ul id="wd-modules">
+      <button>Collapse All</button>
+      <button>View Progress</button>
+      <button>Publish All</button>
+      <button>+ Module</button>
+      <hr />
+      <ul id="wd-modules">
     <li className="wd-module">
     <div className="wd-title">Week 1</div>
     <ul className="wd-lessons">
