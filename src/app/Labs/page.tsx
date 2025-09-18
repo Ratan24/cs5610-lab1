@@ -22,5 +22,8 @@ return (
                 </li>
 
             </ul>
+            Please check out <Link href="https://github.com/Ratan24/cs5610-lab1" target="_blank" rel="noopener noreferrer" id="wd-github">
+              My GitHub Repository
+            </Link>
         </div>
 );}
