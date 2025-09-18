@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 export default function Lab1() {
     return (
@@ -83,7 +84,7 @@ export default function Lab1() {
           <ul id="wd-my-books">
             <li>Dune</li>
             <li>Lord of the Rings</li>
-            <li>Ender's Game</li>
+            <li>Ender&apos;s Game</li>
             <li>Red Mars</li>
             <li>The Forever War</li>
           </ul>
@@ -182,12 +183,12 @@ export default function Lab1() {
         <div id="wd-images">
           <h4>Image tag</h4>
           Loading an image from the internet: <br />
-          <img id="wd-starship" width="400px"
+          <Image id="wd-starship" width="400px"
           src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR411yeRFsBxxq6oOKtKURcNA898XS4qMLuuRtosWUX9Ohukexz" />
           <br />
           Loading a local image:
           <br />
-          <img id="wd-teslabot" src="/images/teslabot-getty.jpg" height="200px" />
+          <Image id="wd-teslabot" src="/images/teslabot-getty.jpg" height="200px" />
         </div>
 
         <div id="wd-forms">
@@ -295,12 +296,12 @@ export default function Lab1() {
         <>
           <h4>Anchor tag</h4>
           Please
-          <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
+          <Link href="https://www.lipsum.com" id="wd-lipsum">click here</Link>
           to get dummy text<br/>
 
-          Please check out <a href="https://github.com/Ratan24/cs5610-lab1" target="_blank" rel="noopener noreferrer" id="wd-github">
+          Please check out <Link href="https://github.com/Ratan24/cs5610-lab1" target="_blank" rel="noopener noreferrer" id="wd-github">
               My GitHub Repository
-            </a>
+            </Link>
         </>
 
         
