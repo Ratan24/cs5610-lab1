@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 export default function Lab1() {
     return (
       <div id="wd-lab1">
@@ -83,7 +84,7 @@ export default function Lab1() {
           <ul id="wd-my-books">
             <li>Dune</li>
             <li>Lord of the Rings</li>
-            <li>Ender's Game</li>
+            <li>Ender&apos;s Game</li>
             <li>Red Mars</li>
             <li>The Forever War</li>
           </ul>
@@ -182,12 +183,12 @@ export default function Lab1() {
         <div id="wd-images">
           <h4>Image tag</h4>
           Loading an image from the internet: <br />
-          <img id="wd-starship" width="400px"
-          src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR411yeRFsBxxq6oOKtKURcNA898XS4qMLuuRtosWUX9Ohukexz" />
+          <Image id="wd-starship" width={400} height={250}
+          src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR411yeRFsBxxq6oOKtKURcNA898XS4qMLuuRtosWUX9Ohukexz" alt="starship" />
           <br />
           Loading a local image:
           <br />
-          <img id="wd-teslabot" src="/images/teslabot-getty.jpg" height="200px" />
+          <Image id="wd-teslabot" src="/images/teslabot-getty.jpg" width={400} height={200} alt="teslabot" />
         </div>
 
         <div id="wd-forms">
