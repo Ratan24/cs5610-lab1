@@ -183,12 +183,13 @@ export default function Lab1() {
         <div id="wd-images">
           <h4>Image tag</h4>
           Loading an image from the internet: <br />
-          <Image id="wd-starship" width="400px"
-          src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR411yeRFsBxxq6oOKtKURcNA898XS4qMLuuRtosWUX9Ohukexz" />
+          <Image id="wd-starship" width={400} height={250}
+          src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR411yeRFsBxxq6oOKtKURcNA898XS4qMLuuRtosWUX9Ohukexz" alt="starship" />
+          <br />
           <br />
           Loading a local image:
           <br />
-          <Image id="wd-teslabot" src="/images/teslabot-getty.jpg" height="200px" />
+          <Image id="wd-teslabot" width={200} height={200} src="/images/teslabot-getty.jpg" alt="teslabot" />
         </div>
 
         <div id="wd-forms">
