@@ -1,95 +1,121 @@
+"use client";
+import { Card, Col, Row, Button, CardImg, CardBody, CardTitle, CardText } from "react-bootstrap";
 import Link from "next/link";
-import Image from "next/image";
+
 export default function Dashboard() {
-return (
-<div id="wd-dashboard">
-<h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-<h2 id="wd-dashboard-published">Published Courses (7)</h2> <hr />
-<div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="React JS course logo" />
-            <div>
-              <h5> CS1234 React JS </h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack software developer
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/2345" className="wd-dashboard-course-link">
-            <Image src="/images/nodejs.png" width={200} height={150} alt="Node.js course logo" />
-            <div>
-              <h5> CS2345 Node.js </h5>
-              <p className="wd-dashboard-course-title">
-                Backend Development
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/3456" className="wd-dashboard-course-link">
-            <Image src="/images/mongodb.png" width={200} height={150} alt="MongoDB course logo" />
-            <div>
-              <h5> CS3456 MongoDB </h5>
-              <p className="wd-dashboard-course-title">
-                Database Management
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/4567" className="wd-dashboard-course-link">
-            <Image src="/images/expressjs.png" width={200} height={150} alt="Express.js course logo" />
-            <div>
-              <h5> CS4567 Express.js </h5>
-              <p className="wd-dashboard-course-title">
-                Web Frameworks
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/5678" className="wd-dashboard-course-link">
-            <Image src="/images/angular.png" width={200} height={150} alt="Angular course logo" />
-            <div>
-              <h5> CS5678 Angular </h5>
-              <p className="wd-dashboard-course-title">
-                Frontend Frameworks
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/6789" className="wd-dashboard-course-link">
-            <Image src="/images/vuejs.png" width={200} height={150} alt="Vue.js course logo" />
-            <div>
-              <h5> CS6789 Vue.js </h5>
-              <p className="wd-dashboard-course-title">
-                Frontend Frameworks
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/Courses/7890" className="wd-dashboard-course-link">
-            <Image src="/images/nextjs.png" width={200} height={150} alt="Next.js course logo" />
-            <div>
-              <h5> CS7890 Next.js </h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack Frameworks
-              </p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
+  return (
+    <div id="wd-dashboard">
+      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <h2 id="wd-dashboard-published">Published Courses (7)</h2> <hr />
+      <div id="wd-dashboard-courses">
+        <Row xs={1} md={5} className="g-4">
+          
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/1234/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/reactjs.jpg" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS1234 React JS</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Full Stack software developer
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/2345/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/nodejs.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS2345 Node.js</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Backend Development
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/3456/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/mongodb.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS3456 MongoDB</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Database Management
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/4567/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/expressjs.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS4567 Express.js</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Web Frameworks
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/5678/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/angular.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS5678 Angular</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Frontend Frameworks
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/6789/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/vuejs.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS6789 Vue.js</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Frontend Frameworks
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+
+          <Col style={{ width: "300px" }}>
+            <Card>
+              <Link href="/Courses/7890/Home" className="text-decoration-none text-dark">
+                <CardImg variant="top" src="/images/nextjs.png" height="160px" />
+                <CardBody>
+                  <CardTitle className="text-nowrap overflow-hidden">CS7890 Next.js</CardTitle>
+                  <CardText className="overflow-hidden" style={{ height: "50px" }}>
+                    Full Stack Frameworks
+                  </CardText>
+                  <Button variant="primary">Go</Button>
+                </CardBody>
+              </Link>
+            </Card>
+          </Col>
+        </Row>
       </div>
-</div>
-);}
+    </div>
+  );
+}

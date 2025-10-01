@@ -1,30 +1,28 @@
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
+import { FaAlignJustify } from "react-icons/fa";
 
-export default async function CoursesLayout({
+export default async function CoursesLayout({ // Add "async" here
   children,
   params,
-}: Readonly<{
+}: {
   children: ReactNode;
-  params: Promise<{ cid: string }>;
-}>) {
-  const { cid } = await params;
+  params: { cid: string };
+}) {
+  const { cid } = params; // No "await" needed here once the function is async
   return (
     <div id="wd-courses">
-      <h2>Courses {cid}</h2>
+      <h2 className="text-danger">
+        <FaAlignJustify className="me-4 fs-4 mb-1" />
+        Course {cid}
+      </h2>
       <hr />
-      <table>
-        <tbody>
-          <tr>
-            <td valign="top" width="200">
-              <CourseNavigation cid={cid} />
-            </td>
-            <td valign="top" width="100%">
-              {children}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="d-flex">
+        <div className="d-none d-md-block">
+          <CourseNavigation cid={cid} />
+        </div>
+        <div className="flex-fill">{children}</div>
+      </div>
     </div>
   );
 }
