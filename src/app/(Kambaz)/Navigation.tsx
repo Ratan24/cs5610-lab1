@@ -8,9 +8,16 @@ import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { LiaBookSolid } from "react-icons/lia";
 import { FaFlask } from "react-icons/fa";
 
+interface NavigationLink {
+  label: string;
+  path: string;
+  icon: React.ComponentType<{ className?: string }>;
+  exact: boolean;
+}
+
 export default function KambazNavigation() {
   const pathname = usePathname();
-  const links = [
+  const links: NavigationLink[] = [
     { label: "Dashboard", path: "/Dashboard", icon: AiOutlineDashboard, exact: true },
     { label: "Courses", path: "/Dashboard", icon: LiaBookSolid, exact: false },
     { label: "Calendar", path: "/Calendar", icon: IoCalendarOutline, exact: true },
@@ -18,7 +25,7 @@ export default function KambazNavigation() {
     { label: "Labs", path: "/Labs", icon: FaFlask, exact: true },
   ];
 
-  const isActive = (link: any) => {
+  const isActive = (link: NavigationLink) => {
     if (link.exact) {
       return pathname === link.path;
     } else {
