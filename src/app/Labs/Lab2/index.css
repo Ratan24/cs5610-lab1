@@ -148,6 +148,7 @@ p#wd-id-selector-1 {
 
   .wd-float-left {
     float: left;
+    height: 100px;
   }
   .wd-float-right {
     float: right;
@@ -198,8 +199,8 @@ p#wd-id-selector-1 {
 
   #wd-screen-size-label {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    right: 0;
     background-color: black;
     color: white;
     padding: 5px;
