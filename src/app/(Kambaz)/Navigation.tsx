@@ -7,6 +7,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { LiaBookSolid } from "react-icons/lia";
+import { FaFlask } from "react-icons/fa";
 
 export default function KambazNavigation() {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ export default function KambazNavigation() {
   ];
   return (
     <ListGroup
-      className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2"
+      className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-flex flex-column bg-black z-2"
       style={{ width: 120 }}
       id="wd-kambaz-navigation"
     >
@@ -44,6 +45,13 @@ export default function KambazNavigation() {
           {link.label}
         </Link>
       ))}
+      <Link href="/Labs/Lab1"
+        className={`list-group-item text-center border-0 bg-black text-white text-decoration-none mt-auto
+        ${pathname.includes("/Labs") && "bg-white text-danger"}`}>
+        <FaFlask className={`fs-1 ${pathname.includes("/Labs") ? "text-danger" : "text-white"}`} />
+        <br />
+        Labs
+      </Link>
     </ListGroup>
   );
 }
