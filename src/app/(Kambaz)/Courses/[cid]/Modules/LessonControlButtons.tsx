@@ -3,7 +3,7 @@ import GreenCheckmark from "./GreenCheckmark";
 
 export default function LessonControlButtons() {
   return (
-    <div className="float-end">
+    <div className="d-flex align-items-center gap-2">
       <GreenCheckmark />
       <IoEllipsisVertical className="fs-4" />
     </div>

@@ -12,10 +12,10 @@ export default async function CoursesLayout({
   const { cid } = await params;
   return (
     <div id="wd-courses">
-      <h2 className="text-danger">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />
-        Course {cid}
-      </h2>
+      <div className="d-flex align-items-center mb-3">
+        <FaAlignJustify className="me-3 fs-4 text-danger" />
+        <h2 className="text-danger mb-0">Course {cid}</h2>
+      </div>
       <hr />
       <div className="d-flex">
         <div className="d-none d-md-block">

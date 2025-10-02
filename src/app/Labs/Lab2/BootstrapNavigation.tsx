@@ -38,7 +38,7 @@ import {
         <div id="wd-css-navigating-with-cards">
           <h2>Cards</h2>
           <Card style={{ width: "18rem" }}>
-            <CardImg variant="top" src="/images/stacked.jpg" />
+            <CardImg variant="top" src="/images/teslabot-getty.jpg" alt="Tesla Bot" />
             <CardBody>
               <CardTitle>Stacking Starship</CardTitle>
               <CardText>
