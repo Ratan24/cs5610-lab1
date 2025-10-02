@@ -1,6 +1,7 @@
 "use client";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
@@ -23,7 +24,7 @@ export default function KambazNavigation() {
     >
       <ListGroup.Item className="bg-black border-0 text-center" as="a"
         href="https://www.northeastern.edu/" target="_blank">
-        <img src="/images/NEU.png" width="75px" alt="NEU Logo"/>
+        <Image src="/images/NEU.png" width={75} height={75} alt="NEU Logo"/>
       </ListGroup.Item>
 
       <Link href="/Account"

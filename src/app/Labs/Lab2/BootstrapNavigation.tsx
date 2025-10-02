@@ -38,14 +38,14 @@ import {
         <div id="wd-css-navigating-with-cards">
           <h2>Cards</h2>
           <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src="/images/stacked.jpg" />
-            <Card.Body>
-              <Card.Title>Stacking Starship</Card.Title>
-              <Card.Text>
+            <CardImg variant="top" src="/images/stacked.jpg" />
+            <CardBody>
+              <CardTitle>Stacking Starship</CardTitle>
+              <CardText>
                 Stacking the most powerful rocket in history. Mars or bust!
-              </Card.Text>
+              </CardText>
               <Button variant="primary">Boldly Go</Button>
-            </Card.Body>
+            </CardBody>
           </Card>
         </div>
       </>

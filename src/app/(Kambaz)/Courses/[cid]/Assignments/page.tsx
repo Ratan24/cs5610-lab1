@@ -8,8 +8,6 @@ import {
 } from "react-bootstrap";
 import { BsGripVertical, BsPlus } from "react-icons/bs";
 import { FaSearch, FaEllipsisV } from "react-icons/fa";
-import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "../Modules/GreenCheckmark";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import ModuleControlButtons from "../Modules/ModuleControlButtons";
 import Link from "next/link";
