@@ -2,14 +2,14 @@ import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa";
 
-export default async function CoursesLayout({ // Add "async" here
+export default function CoursesLayout({
   children,
   params,
 }: {
   children: ReactNode;
   params: { cid: string };
 }) {
-  const { cid } = params; // No "await" needed here once the function is async
+  const { cid } = params;
   return (
     <div id="wd-courses">
       <h2 className="text-danger">

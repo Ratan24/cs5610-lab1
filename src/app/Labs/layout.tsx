@@ -1,22 +1,15 @@
+"use client";
 import { ReactNode } from "react";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-// import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import TOC from "./TOC";
-export default function LabsLayout({children,}: Readonly<{ children: ReactNode }>) {
-    return (
-    <table>
-        <tbody>
-            <tr>
-                <td valign="top" width="100px">
-                    <TOC />
-                </td>
-                <td valign="top">
-                    {children}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-);}
+
+export default function LabsLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="d-flex">
+      <div style={{ width: "150px" }}>
+        <TOC />
+      </div>
+      <div className="flex-fill p-3">{children}</div>
+    </div>
+  );
+}
