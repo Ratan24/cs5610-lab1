@@ -9,6 +9,17 @@ import GreenCheckmark from "../Modules/GreenCheckmark";
 import Link from "next/link";
 import * as db from "../../../Database";
 
+interface Assignment {
+  _id: string;
+  name: string;
+  description: string;
+  course: string;
+  points: number;
+  dueDate: string;
+  availableFromDate: string;
+  availableUntilDate: string;
+}
+
 export default function Assignments() {
   const { cid } = useParams();
   const assignments = db.assignments;
@@ -41,8 +52,8 @@ export default function Assignments() {
       {/* Assignments List */}
       <div className="wd-assignments-list">
         {assignments
-          .filter((assignment: any) => assignment.course === cid)
-          .map((assignment: any) => (
+          .filter((assignment: Assignment) => assignment.course === cid)
+          .map((assignment: Assignment) => (
             <div key={assignment._id} className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
               <div className="wd-green-line position-absolute" style={{
                 left: '20px',
@@ -59,7 +70,7 @@ export default function Assignments() {
                   >
                     <div className="d-flex align-items-center mb-2">
                       <BsGripVertical className="me-2 fs-3" />
-                      <span className="fw-bold">{assignment.title}</span>
+                      <span className="fw-bold">{assignment.name}</span>
                     </div>
                     <div className="ps-4">
                       <div className="text-muted">

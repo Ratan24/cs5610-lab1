@@ -1,116 +1,92 @@
 [
     {
-      "_id": "M101",
-      "name": "Introduction to Rocket Propulsion",
-      "description": "Basic principles of rocket propulsion and rocket engines.",
+      "_id": "A101",
+      "name": "Assignment 1 - Rocket Propulsion Basics",
+      "description": "Complete the following problems related to basic rocket propulsion principles. Show all your work and calculations.",
       "course": "RS101",
-      "lessons": [
-        {
-          "_id": "L101",
-          "name": "History of Rocketry",
-          "description": "A brief history of rocketry and space exploration.",
-          "module": "M101"
-        },
-        {
-          "_id": "L102",
-          "name": "Rocket Propulsion Fundamentals",
-          "description": "Basic principles of rocket propulsion.",
-          "module": "M101"
-        },
-        {
-          "_id": "L103",
-          "name": "Rocket Engine Types",
-          "description": "Overview of different types of rocket engines.",
-          "module": "M101"
-        }
-      ]
+      "points": 100,
+      "dueDate": "2024-02-15",
+      "availableFromDate": "2024-02-01",
+      "availableUntilDate": "2024-02-15"
     },
     {
-      "_id": "M102",
-      "name": "Fuel and Combustion",
-      "description": "Understanding rocket fuel, combustion processes, and efficiency.",
+      "_id": "A102",
+      "name": "Assignment 2 - Fuel Analysis",
+      "description": "Analyze different types of rocket fuels and their properties. Include efficiency calculations and recommendations.",
       "course": "RS101",
-      "lessons": [
-        {
-          "_id": "L201",
-          "name": "Rocket Fuel",
-          "description": "Overview of different types of rocket fuels.",
-          "module": "M102"
-        },
-        {
-          "_id": "L202",
-          "name": "Combustion Processes",
-          "description": "Understanding combustion processes and efficiency.",
-          "module": "M102"
-        },
-        {
-          "_id": "L203",
-          "name": "Combustion Instability",
-          "description": "Understanding combustion instability and mitigation.",
-          "module": "M102"
-        }
-      ]
+      "points": 150,
+      "dueDate": "2024-03-01",
+      "availableFromDate": "2024-02-15",
+      "availableUntilDate": "2024-03-01"
     },
     {
-      "_id": "M103",
-      "name": "Nozzle Design",
-      "description": "Principles of rocket nozzle design and performance optimization.",
+      "_id": "A103",
+      "name": "Assignment 3 - Nozzle Design Project",
+      "description": "Design a rocket nozzle for a specific mission profile. Include calculations, diagrams, and performance analysis.",
       "course": "RS101",
-      "lessons": [
-        {
-          "_id": "L301",
-          "name": "Nozzle Design",
-          "description": "Overview of different types of rocket nozzles.",
-          "module": "M103"
-        },
-        {
-          "_id": "L302",
-          "name": "Nozzle Performance",
-          "description": "Understanding nozzle performance and efficiency.",
-          "module": "M103"
-        },
-        {
-          "_id": "L303",
-          "name": "Nozzle Optimization",
-          "description": "Optimizing nozzle design for specific applications.",
-          "module": "M103"
-        }
-      ]
+      "points": 200,
+      "dueDate": "2024-03-15",
+      "availableFromDate": "2024-03-01",
+      "availableUntilDate": "2024-03-15"
     },
     {
-      "_id": "M201",
-      "name": "Fundamentals of Aerodynamics",
-      "description": "Basic aerodynamic concepts and fluid dynamics principles.",
-      "course": "RS102"
+      "_id": "A201",
+      "name": "Assignment 1 - Aerodynamic Analysis",
+      "description": "Analyze the aerodynamic characteristics of different spacecraft configurations.",
+      "course": "RS102",
+      "points": 120,
+      "dueDate": "2024-02-20",
+      "availableFromDate": "2024-02-05",
+      "availableUntilDate": "2024-02-20"
     },
     {
-      "_id": "M202",
-      "name": "Subsonic and Supersonic Flow",
-      "description": "Understanding subsonic and supersonic aerodynamic behaviors.",
-      "course": "RS102"
+      "_id": "A202",
+      "name": "Assignment 2 - Flow Analysis",
+      "description": "Study subsonic and supersonic flow patterns around spacecraft surfaces.",
+      "course": "RS102",
+      "points": 180,
+      "dueDate": "2024-03-05",
+      "availableFromDate": "2024-02-20",
+      "availableUntilDate": "2024-03-05"
     },
     {
-      "_id": "M203",
-      "name": "Aerodynamic Heating",
-      "description": "Study of aerodynamic heating and thermal protection systems.",
-      "course": "RS102"
+      "_id": "A203",
+      "name": "Assignment 3 - Thermal Analysis",
+      "description": "Analyze aerodynamic heating effects and design thermal protection systems.",
+      "course": "RS102",
+      "points": 160,
+      "dueDate": "2024-03-20",
+      "availableFromDate": "2024-03-05",
+      "availableUntilDate": "2024-03-20"
     },
     {
-      "_id": "M301",
-      "name": "Spacecraft Structural Design",
-      "description": "Fundamentals of designing spacecraft structures and materials selection.",
-      "course": "RS103"
+      "_id": "A301",
+      "name": "Assignment 1 - Structural Design",
+      "description": "Design a spacecraft structure for a specific mission. Include material selection and stress analysis.",
+      "course": "RS103",
+      "points": 250,
+      "dueDate": "2024-02-25",
+      "availableFromDate": "2024-02-10",
+      "availableUntilDate": "2024-02-25"
     },
     {
-      "_id": "M302",
-      "name": "Orbital Mechanics",
-      "description": "Understanding orbital dynamics and mission planning.",
-      "course": "RS103"
+      "_id": "A302",
+      "name": "Assignment 2 - Orbital Mechanics",
+      "description": "Calculate orbital parameters and plan a spacecraft mission trajectory.",
+      "course": "RS103",
+      "points": 220,
+      "dueDate": "2024-03-10",
+      "availableFromDate": "2024-02-25",
+      "availableUntilDate": "2024-03-10"
     },
     {
-      "_id": "M303",
-      "name": "Spacecraft Systems Engineering",
-      "description": "Overview of spacecraft systems and subsystems engineering.",
-      "course": "RS103"
+      "_id": "A303",
+      "name": "Assignment 3 - Systems Integration",
+      "description": "Integrate various spacecraft subsystems into a cohesive mission design.",
+      "course": "RS103",
+      "points": 300,
+      "dueDate": "2024-03-25",
+      "availableFromDate": "2024-03-10",
+      "availableUntilDate": "2024-03-25"
     }
   ]

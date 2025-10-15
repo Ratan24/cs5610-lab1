@@ -5,9 +5,20 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import * as db from "../../../../Database";
 
+interface Assignment {
+  _id: string;
+  name: string;
+  description: string;
+  course: string;
+  points?: number;
+  dueDate?: string;
+  availableFromDate?: string;
+  availableUntilDate?: string;
+}
+
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((assignment: any) => assignment._id === aid);
+  const assignment = db.assignments.find((assignment: Assignment) => assignment._id === aid) as Assignment;
 
   if (!assignment) {
     return <div>Assignment not found</div>;
@@ -16,7 +27,7 @@ export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue={assignment.title} className="form-control mb-3" />
+      <input id="wd-name" defaultValue={assignment.name} className="form-control mb-3" />
 
       <textarea id="wd-description" className="form-control mb-3" rows={5} defaultValue={assignment.description} />
 
@@ -25,7 +36,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-points">Points</label>
         </Col>
         <Col md={9}>
-          <input id="wd-points" defaultValue={assignment.points} className="form-control" />
+          <input id="wd-points" defaultValue={assignment.points || ""} className="form-control" />
         </Col>
       </Row>
 
@@ -86,7 +97,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-due-date">Due</label>
         </Col>
         <Col md={9}>
-          <input type="date" id="wd-due-date" defaultValue={assignment.dueDate} className="form-control" />
+          <input type="date" id="wd-due-date" defaultValue={assignment.dueDate || ""} className="form-control" />
         </Col>
       </Row>
 
@@ -95,7 +106,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-from">Available from</label>
         </Col>
         <Col md={9}>
-          <input type="date" id="wd-available-from" defaultValue={assignment.availableFromDate} className="form-control" />
+          <input type="date" id="wd-available-from" defaultValue={assignment.availableFromDate || ""} className="form-control" />
         </Col>
       </Row>
 
@@ -104,7 +115,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-until">Until</label>
         </Col>
         <Col md={9}>
-          <input type="date" id="wd-available-until" defaultValue={assignment.availableUntilDate} className="form-control" />
+          <input type="date" id="wd-available-until" defaultValue={assignment.availableUntilDate || ""} className="form-control" />
         </Col>
       </Row>
 

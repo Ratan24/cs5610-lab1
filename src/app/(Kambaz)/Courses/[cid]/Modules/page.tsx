@@ -8,6 +8,21 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import ModulesControls from "./ModulesControls";
 import * as db from "../../../Database";
 
+interface Lesson {
+  _id: string;
+  name: string;
+  description: string;
+  module: string;
+}
+
+interface Module {
+  _id: string;
+  name: string;
+  description: string;
+  course: string;
+  lessons?: Lesson[];
+}
+
 export default function Modules() {
   const { cid } = useParams();
   const modules = db.modules;
@@ -18,8 +33,8 @@ export default function Modules() {
       <br /><br /><br />
       <ListGroup className="rounded-0" id="wd-modules">
         {modules
-          .filter((module: any) => module.course === cid)
-          .map((module: any) => (
+          .filter((module: Module) => module.course === cid)
+          .map((module: Module) => (
             <ListGroupItem key={module._id} className="wd-module p-0 mb-3 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center">
@@ -37,7 +52,7 @@ export default function Modules() {
                     width: '3px',
                     backgroundColor: '#28a745'
                   }}></div>
-                  {module.lessons.map((lesson: any) => (
+                  {module.lessons.map((lesson: Lesson) => (
                     <ListGroupItem key={lesson._id} className="wd-lesson p-3 ps-5 d-flex align-items-center justify-content-between border-0">
                       <div className="d-flex align-items-center">
                         <BsGripVertical className="me-2 fs-3" /> 
