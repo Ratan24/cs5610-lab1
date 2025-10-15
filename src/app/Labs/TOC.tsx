@@ -34,7 +34,7 @@ export default function TOC() {
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="https://github.com/Ratan24/cs5610-lab1/tree/a2" id="wd-github" target="_blank" rel="noopener noreferrer">
+        <NavLink href="https://github.com/Ratan24/cs5610-lab1/tree/a3" id="wd-github" target="_blank" rel="noopener noreferrer">
           My GitHub
         </NavLink>
       </NavItem>
