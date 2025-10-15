@@ -1,15 +1,18 @@
 "use client";
-import {
-  FormControl,
-  InputGroup,
-} from "react-bootstrap";
-import { BsGripVertical, BsPlus } from "react-icons/bs";
+
+import { FormControl, InputGroup } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { useParams } from "next/navigation";
 import GreenCheckmark from "../Modules/GreenCheckmark";
 import Link from "next/link";
+import * as db from "../../../Database";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
+
   return (
     <div id="wd-assignments">
       {/* Search Bar */}
@@ -29,109 +32,52 @@ export default function Assignments() {
           <span className="fw-bold">ASSIGNMENTS</span>
         </div>
         <div className="d-flex align-items-center gap-2">
+          <span>40% of Total</span>
           <GreenCheckmark />
-          <BsPlus className="fs-4" />
           <IoEllipsisVertical className="fs-4" />
         </div>
       </div>
 
       {/* Assignments List */}
       <div className="wd-assignments-list">
-        <div className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
-          <div className="wd-green-line position-absolute" style={{
-            left: '20px',
-            top: '0',
-            bottom: '0',
-            width: '3px',
-            backgroundColor: '#28a745'
-          }}></div>
-          <div className="d-flex align-items-start justify-content-between ps-5">
-            <div className="flex-grow-1">
-              <Link href="/Courses/1234/Assignments/Editor" className="text-decoration-none text-dark">
-                <div className="d-flex align-items-center mb-2">
-                  <BsGripVertical className="me-2 fs-3" />
-                  <span className="fw-bold">A1 - ENV + HTML</span>
+        {assignments
+          .filter((assignment: any) => assignment.course === cid)
+          .map((assignment: any) => (
+            <div key={assignment._id} className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
+              <div className="wd-green-line position-absolute" style={{
+                left: '20px',
+                top: '0',
+                bottom: '0',
+                width: '3px',
+                backgroundColor: '#28a745'
+              }}></div>
+              <div className="d-flex align-items-start justify-content-between ps-5">
+                <div className="flex-grow-1">
+                  <Link 
+                    href={`/Courses/${cid}/Assignments/${assignment._id}`}
+                    className="wd-assignment-link text-decoration-none text-dark"
+                  >
+                    <div className="d-flex align-items-center mb-2">
+                      <BsGripVertical className="me-2 fs-3" />
+                      <span className="fw-bold">{assignment.title}</span>
+                    </div>
+                    <div className="ps-4">
+                      <div className="text-muted">
+                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> {assignment.availableFromDate}
+                      </div>
+                      <div className="text-muted">
+                        <strong>Due</strong> {assignment.dueDate} | {assignment.points} pts
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-                <div className="ps-4">
-                  <div className="text-muted">
-                    <span className="text-warning">Multiple Modules</span> | <strong>Not available until</strong> May 6 at 12:00am
-                  </div>
-                  <div className="text-muted">
-                    <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                  </div>
+                <div className="d-flex align-items-center gap-2">
+                  <GreenCheckmark />
+                  <IoEllipsisVertical className="fs-4" />
                 </div>
-              </Link>
+              </div>
             </div>
-            <div className="d-flex align-items-center gap-2">
-              <GreenCheckmark />
-              <IoEllipsisVertical className="fs-4" />
-            </div>
-          </div>
-        </div>
-
-        <div className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
-          <div className="wd-green-line position-absolute" style={{
-            left: '20px',
-            top: '0',
-            bottom: '0',
-            width: '3px',
-            backgroundColor: '#28a745'
-          }}></div>
-          <div className="d-flex align-items-start justify-content-between ps-5">
-            <div className="flex-grow-1">
-              <Link href="/Courses/1234/Assignments/Editor" className="text-decoration-none text-dark">
-                <div className="d-flex align-items-center mb-2">
-                  <BsGripVertical className="me-2 fs-3" />
-                  <span className="fw-bold">A2 - CSS + BOOTSTRAP</span>
-                </div>
-                <div className="ps-4">
-                  <div className="text-muted">
-                    <span className="text-warning">Multiple Modules</span> | <strong>Not available until</strong> May 13 at 12:00am
-                  </div>
-                  <div className="text-muted">
-                    <strong>Due</strong> May 20 at 11:59pm | 100 pts
-                  </div>
-                </div>
-              </Link>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <GreenCheckmark />
-              <IoEllipsisVertical className="fs-4" />
-            </div>
-          </div>
-        </div>
-
-        <div className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
-          <div className="wd-green-line position-absolute" style={{
-            left: '20px',
-            top: '0',
-            bottom: '0',
-            width: '3px',
-            backgroundColor: '#28a745'
-          }}></div>
-          <div className="d-flex align-items-start justify-content-between ps-5">
-            <div className="flex-grow-1">
-              <Link href="/Courses/1234/Assignments/Editor" className="text-decoration-none text-dark">
-                <div className="d-flex align-items-center mb-2">
-                  <BsGripVertical className="me-2 fs-3" />
-                  <span className="fw-bold">A3 - JAVASCRIPT + REACT</span>
-                </div>
-                <div className="ps-4">
-                  <div className="text-muted">
-                    <span className="text-warning">Multiple Modules</span> | <strong>Not available until</strong> May 20 at 12:00am
-                  </div>
-                  <div className="text-muted">
-                    <strong>Due</strong> May 27 at 11:59pm | 100 pts
-                  </div>
-                </div>
-              </Link>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <GreenCheckmark />
-              <IoEllipsisVertical className="fs-4" />
-            </div>
-          </div>
-        </div>
+          ))}
       </div>
     </div>
   );
