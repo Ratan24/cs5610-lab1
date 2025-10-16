@@ -58,6 +58,10 @@ export default function AssignmentEditor() {
         <Col md={9}>
           <select id="wd-display-grade-as" className="form-select">
             <option value="Percentage">Percentage</option>
+            <option value="Points">Points</option>
+            <option value="Letter Grade">Letter Grade</option>
+            <option value="Pass/Fail">Pass/Fail</option>
+            <option value="Complete/Incomplete">Complete/Incomplete</option>
           </select>
         </Col>
       </Row>
@@ -96,8 +100,11 @@ export default function AssignmentEditor() {
         <Col md={3} className="text-end">
           <label htmlFor="wd-due-date">Due</label>
         </Col>
-        <Col md={9}>
+        <Col md={6}>
           <input type="date" id="wd-due-date" defaultValue={assignment.dueDate || ""} className="form-control" />
+        </Col>
+        <Col md={3}>
+          <input type="time" id="wd-due-time" defaultValue="23:59" className="form-control" />
         </Col>
       </Row>
 
@@ -105,8 +112,11 @@ export default function AssignmentEditor() {
         <Col md={3} className="text-end">
           <label htmlFor="wd-available-from">Available from</label>
         </Col>
-        <Col md={9}>
+        <Col md={6}>
           <input type="date" id="wd-available-from" defaultValue={assignment.availableFromDate || ""} className="form-control" />
+        </Col>
+        <Col md={3}>
+          <input type="time" id="wd-available-from-time" defaultValue="00:00" className="form-control" />
         </Col>
       </Row>
 
@@ -114,8 +124,11 @@ export default function AssignmentEditor() {
         <Col md={3} className="text-end">
           <label htmlFor="wd-available-until">Until</label>
         </Col>
-        <Col md={9}>
+        <Col md={6}>
           <input type="date" id="wd-available-until" defaultValue={assignment.availableUntilDate || ""} className="form-control" />
+        </Col>
+        <Col md={3}>
+          <input type="time" id="wd-available-until-time" defaultValue="23:59" className="form-control" />
         </Col>
       </Row>
 

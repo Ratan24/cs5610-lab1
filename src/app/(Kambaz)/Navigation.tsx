@@ -22,7 +22,7 @@ export default function KambazNavigation() {
     { label: "Courses", path: "/Dashboard", icon: LiaBookSolid, exact: false },
     { label: "Calendar", path: "/Calendar", icon: IoCalendarOutline, exact: true },
     { label: "Inbox", path: "/Inbox", icon: FaInbox, exact: true },
-    { label: "Labs", path: "/Labs", icon: FaFlask, exact: true },
+    { label: "Labs", path: "/Labs/Lab1", icon: FaFlask, exact: true },
   ];
 
   const isActive = (link: NavigationLink) => {
@@ -41,17 +41,25 @@ export default function KambazNavigation() {
     >
       {/* Logo Section */}
       <ListGroup.Item className="bg-black border-0 text-center py-4">
-        <div className="d-flex flex-column align-items-center">
-          <div 
-            className="bg-danger text-white rounded d-flex align-items-center justify-content-center mb-2"
-            style={{ width: "60px", height: "60px", fontSize: "2rem", fontWeight: "bold" }}
-          >
-            N
+        <a 
+          href="https://www.northeastern.edu/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-decoration-none"
+          style={{ cursor: "pointer" }}
+        >
+          <div className="d-flex flex-column align-items-center">
+            <div 
+              className="bg-danger text-white rounded d-flex align-items-center justify-content-center mb-2"
+              style={{ width: "60px", height: "60px", fontSize: "2rem", fontWeight: "bold" }}
+            >
+              N
+            </div>
+            <div className="text-white" style={{ fontSize: "0.7rem", lineHeight: "1.2" }}>
+              THE VERITAS<br />VIRTUS
+            </div>
           </div>
-          <div className="text-white" style={{ fontSize: "0.7rem", lineHeight: "1.2" }}>
-            THE VERITAS<br />VIRTUS
-          </div>
-        </div>
+        </a>
       </ListGroup.Item>
 
       {/* Account Link */}

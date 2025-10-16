@@ -65,7 +65,14 @@ export default function AssignmentEditor() {
               <FormLabel>
                 <strong>Due</strong>
               </FormLabel>
-              <FormControl id="wd-due-date" type="date" defaultValue="2024-05-13" />
+              <Row>
+                <Col md={8}>
+                  <FormControl id="wd-due-date" type="date" defaultValue="2024-05-13" />
+                </Col>
+                <Col md={4}>
+                  <FormControl id="wd-due-time" type="time" defaultValue="23:59" />
+                </Col>
+              </Row>
             </FormGroup>
             <br />
             <Row>
@@ -74,11 +81,22 @@ export default function AssignmentEditor() {
                   <FormLabel>
                     <strong>Available from</strong>
                   </FormLabel>
-                  <FormControl
-                    id="wd-available-from"
-                    type="date"
-                    defaultValue="2024-05-06"
-                  />
+                  <Row>
+                    <Col md={8}>
+                      <FormControl
+                        id="wd-available-from"
+                        type="date"
+                        defaultValue="2024-05-06"
+                      />
+                    </Col>
+                    <Col md={4}>
+                      <FormControl
+                        id="wd-available-from-time"
+                        type="time"
+                        defaultValue="00:00"
+                      />
+                    </Col>
+                  </Row>
                 </FormGroup>
               </Col>
               <Col>
@@ -86,11 +104,22 @@ export default function AssignmentEditor() {
                   <FormLabel>
                     <strong>Until</strong>
                   </FormLabel>
-                  <FormControl
-                    id="wd-until"
-                    type="date"
-                    defaultValue="2024-05-20"
-                  />
+                  <Row>
+                    <Col md={8}>
+                      <FormControl
+                        id="wd-until"
+                        type="date"
+                        defaultValue="2024-05-20"
+                      />
+                    </Col>
+                    <Col md={4}>
+                      <FormControl
+                        id="wd-until-time"
+                        type="time"
+                        defaultValue="23:59"
+                      />
+                    </Col>
+                  </Row>
                 </FormGroup>
               </Col>
             </Row>
