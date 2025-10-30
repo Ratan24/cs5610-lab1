@@ -15,41 +15,56 @@ import Link from "next/link";
 
 interface Assignment {
   _id: string;
-  name: string;  // Changed from title
+  name: string;
   description: string;
   course: string;
   points: number;
   dueDate: string;
-  availableFromDate: string;  // Changed from availableFrom
-  availableUntilDate: string;  // Changed from availableUntil
+  availableFromDate: string;
+  availableUntilDate: string;
   editing?: boolean;
+}
+
+interface User {
+  _id: string;
+  role: string;
 }
 
 export default function Assignments() {
   const { cid } = useParams() as { cid: string };
-  const [assignmentName, setAssignmentName] = useState("");  // Changed from assignmentTitle
+  const [assignmentName, setAssignmentName] = useState("");
   const { assignments } = useSelector(
     (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
       state.assignmentsReducer
   );
   const dispatch = useDispatch();
 
+  const { currentUser } = useSelector(
+    (state: { accountReducer: { currentUser: User | null } }) =>
+      state.accountReducer
+  );
+
+  // Check if user is FACULTY
+  const isFaculty = currentUser?.role === "FACULTY";
+
   return (
     <div id="wd-assignments">
-      {/* Add Assignment Controls */}
-      <AssignmentControls
-        assignmentName={assignmentName}
-        setAssignmentName={setAssignmentName}
-        addAssignment={() => {
-          dispatch(addAssignment({ 
-            name: assignmentName,  // Changed from title
-            course: cid,
-            points: 100,
-            dueDate: new Date().toISOString().split('T')[0],
-          }));
-          setAssignmentName("");
-        }}
-      />
+      {/* Only show controls for FACULTY */}
+      {isFaculty && (
+        <AssignmentControls
+          assignmentName={assignmentName}
+          setAssignmentName={setAssignmentName}
+          addAssignment={() => {
+            dispatch(addAssignment({ 
+              name: assignmentName,
+              course: cid,
+              points: 100,
+              dueDate: new Date().toISOString().split('T')[0],
+            }));
+            setAssignmentName("");
+          }}
+        />
+      )}
 
       {/* Search Bar */}
       <div className="mb-3">
@@ -98,7 +113,7 @@ export default function Assignments() {
                       {!assignment.editing && (
                         <span className="fw-bold">{assignment.name}</span>
                       )}
-                      {assignment.editing && (
+                      {assignment.editing && isFaculty && (
                         <FormControl
                           className="w-50 d-inline-block"
                           onClick={(e) => e.preventDefault()}
@@ -126,11 +141,14 @@ export default function Assignments() {
                   </Link>
                 </div>
                 <div className="d-flex align-items-center gap-2">
-                  <AssignmentControlButtons
-                    assignmentId={assignment._id}
-                    deleteAssignment={(assignmentId) => dispatch(deleteAssignment(assignmentId))}
-                    editAssignment={(assignmentId) => dispatch(editAssignment(assignmentId))}
-                  />
+                  {/* Only show control buttons for FACULTY */}
+                  {isFaculty && (
+                    <AssignmentControlButtons
+                      assignmentId={assignment._id}
+                      deleteAssignment={(assignmentId) => dispatch(deleteAssignment(assignmentId))}
+                      editAssignment={(assignmentId) => dispatch(editAssignment(assignmentId))}
+                    />
+                  )}
                   <GreenCheckmark />
                   <IoEllipsisVertical className="fs-4" />
                 </div>

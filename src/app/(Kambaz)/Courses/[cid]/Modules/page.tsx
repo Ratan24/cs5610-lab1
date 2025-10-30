@@ -10,6 +10,11 @@ import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
 
+interface User {
+  _id: string;
+  role: string;
+}
+
 export default function Modules() {
   const { cid } = useParams() as { cid: string };
   const [moduleName, setModuleName] = useState("");
@@ -28,17 +33,30 @@ export default function Modules() {
   );
   const dispatch = useDispatch();
 
+  const { currentUser } = useSelector(
+    (state: { accountReducer: { currentUser: User | null } }) =>
+      state.accountReducer
+  );
+
+  // Check if user is FACULTY
+  const isFaculty = currentUser?.role === "FACULTY";
+
   return (
     <div>
-      <ModulesControls
-        moduleName={moduleName}
-        setModuleName={setModuleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
-          setModuleName("");
-        }}
-      />
-      <br /><br /><br /><br />
+      {/* Only show controls for FACULTY */}
+      {isFaculty && (
+        <>
+          <ModulesControls
+            moduleName={moduleName}
+            setModuleName={setModuleName}
+            addModule={() => {
+              dispatch(addModule({ name: moduleName, course: cid }));
+              setModuleName("");
+            }}
+          />
+          <br /><br /><br /><br />
+        </>
+      )}
       
       <ListGroup className="rounded-0" id="wd-modules">
         {modules
@@ -57,7 +75,7 @@ export default function Modules() {
               <div className="wd-title p-3 ps-2 bg-secondary">
                 <BsGripVertical className="me-2 fs-3" />
                 {!module.editing && module.name}
-                {module.editing && (
+                {module.editing && isFaculty && (
                   <FormControl
                     className="w-50 d-inline-block"
                     onChange={(e) =>
@@ -83,11 +101,14 @@ export default function Modules() {
                     value={module.name}
                   />
                 )}
-                <ModuleControlButtons
-                  moduleId={module._id}
-                  deleteModule={(moduleId) => dispatch(deleteModule(moduleId))}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))}
-                />
+                {/* Only show control buttons for FACULTY */}
+                {isFaculty && (
+                  <ModuleControlButtons
+                    moduleId={module._id}
+                    deleteModule={(moduleId) => dispatch(deleteModule(moduleId))}
+                    editModule={(moduleId) => dispatch(editModule(moduleId))}
+                  />
+                )}
               </div>
               
               {module.lessons && (
