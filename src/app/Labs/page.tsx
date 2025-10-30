@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 export default function Labs() {
   return (
     <div id="wd-labs">
@@ -22,7 +23,7 @@ export default function Labs() {
           </Link>
         </li>
         <li>
-        <Link href="/Labs/Lab4" id="wd-lab4-link">
+          <Link href="/Labs/Lab4" id="wd-lab4-link">
             Lab 4: State and Redux
           </Link>
         </li>
@@ -34,7 +35,13 @@ export default function Labs() {
       </ul>
       <hr />
       <p>
-        Please check out <Link href="https://github.com/Ratan24/cs5610-lab1/tree/a3" target="_blank" rel="noopener noreferrer" id="wd-github">
+        Please check out{" "}
+        <Link
+          href="https://github.com/Ratan24/cs5610-lab1/tree/a3"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="wd-github"
+        >
           My GitHub Repository
         </Link>
       </p>

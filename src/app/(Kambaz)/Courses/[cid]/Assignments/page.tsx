@@ -5,27 +5,52 @@ import { BsGripVertical } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useParams } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { addAssignment, deleteAssignment, updateAssignment, editAssignment } from "./reducer";
 import GreenCheckmark from "../Modules/GreenCheckmark";
+import AssignmentControls from "./AssignmentControls";
+import AssignmentControlButtons from "./AssignmentControlButtons";
 import Link from "next/link";
-import * as db from "../../../Database";
 
 interface Assignment {
   _id: string;
-  name: string;
+  name: string;  // Changed from title
   description: string;
   course: string;
   points: number;
   dueDate: string;
-  availableFromDate: string;
-  availableUntilDate: string;
+  availableFromDate: string;  // Changed from availableFrom
+  availableUntilDate: string;  // Changed from availableUntil
+  editing?: boolean;
 }
 
 export default function Assignments() {
-  const { cid } = useParams();
-  const assignments = db.assignments;
+  const { cid } = useParams() as { cid: string };
+  const [assignmentName, setAssignmentName] = useState("");  // Changed from assignmentTitle
+  const { assignments } = useSelector(
+    (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
+      state.assignmentsReducer
+  );
+  const dispatch = useDispatch();
 
   return (
     <div id="wd-assignments">
+      {/* Add Assignment Controls */}
+      <AssignmentControls
+        assignmentName={assignmentName}
+        setAssignmentName={setAssignmentName}
+        addAssignment={() => {
+          dispatch(addAssignment({ 
+            name: assignmentName,  // Changed from title
+            course: cid,
+            points: 100,
+            dueDate: new Date().toISOString().split('T')[0],
+          }));
+          setAssignmentName("");
+        }}
+      />
+
       {/* Search Bar */}
       <div className="mb-3">
         <InputGroup style={{ width: "300px" }}>
@@ -70,19 +95,42 @@ export default function Assignments() {
                   >
                     <div className="d-flex align-items-center mb-2">
                       <BsGripVertical className="me-2 fs-3" />
-                      <span className="fw-bold">{assignment.name}</span>
+                      {!assignment.editing && (
+                        <span className="fw-bold">{assignment.name}</span>
+                      )}
+                      {assignment.editing && (
+                        <FormControl
+                          className="w-50 d-inline-block"
+                          onClick={(e) => e.preventDefault()}
+                          onChange={(e) =>
+                            dispatch(updateAssignment({ ...assignment, name: e.target.value }))
+                          }
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              dispatch(updateAssignment({ ...assignment, editing: false }));
+                            }
+                          }}
+                          value={assignment.name}
+                        />
+                      )}
                     </div>
                     <div className="ps-4">
                       <div className="text-muted">
-                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> {assignment.availableFromDate}
+                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> {assignment.availableFromDate || 'N/A'}
                       </div>
                       <div className="text-muted">
-                        <strong>Due</strong> {assignment.dueDate} | {assignment.points} pts
+                        <strong>Due</strong> {assignment.dueDate || 'N/A'} | {assignment.points} pts
                       </div>
                     </div>
                   </Link>
                 </div>
                 <div className="d-flex align-items-center gap-2">
+                  <AssignmentControlButtons
+                    assignmentId={assignment._id}
+                    deleteAssignment={(assignmentId) => dispatch(deleteAssignment(assignmentId))}
+                    editAssignment={(assignmentId) => dispatch(editAssignment(assignmentId))}
+                  />
                   <GreenCheckmark />
                   <IoEllipsisVertical className="fs-4" />
                 </div>

@@ -1,39 +1,145 @@
 "use client";
 
 import Link from "next/link";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button, FormControl } from "react-bootstrap";
+import { useState } from "react";
 import * as db from "../Database";
 
 export default function Dashboard() {
-  const courses = db.courses;
-  
+  interface Course {
+    _id: string;
+    name: string;
+    number: string;
+    startDate: string;
+    endDate: string;
+    image?: string;
+    description: string;
+    department?: string;
+    credits?: number;
+  }
+
+  const [courses, setCourses] = useState<Course[]>(db.courses as Course[]);
+  const [course, setCourse] = useState<Course>({
+    _id: "0",
+    name: "New Course",
+    number: "New Number",
+    startDate: "2023-09-10",
+    endDate: "2023-12-15",
+    image: "/images/reactjs.jpg",
+    description: "New Description",
+  });
+
+  const addNewCourse = () => {
+    const newCourse = {
+      ...course,
+      _id: new Date().getTime().toString(),
+    };
+    setCourses([...courses, newCourse]);
+  };
+
+  const deleteCourse = (courseId: string) => {
+    setCourses(courses.filter((course) => course._id !== courseId));
+  };
+
+  const updateCourse = () => {
+    setCourses(
+      courses.map((c) => {
+        if (c._id === course._id) {
+          return course;
+        } else {
+          return c;
+        }
+      })
+    );
+  };
+
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
       <hr />
+      
+      <h5>
+        New Course
+        <Button
+          className="btn btn-primary float-end"
+          id="wd-add-new-course-click"
+          onClick={addNewCourse}
+        >
+          Add
+        </Button>
+        <Button
+          className="btn btn-warning float-end me-2"
+          id="wd-update-course-click"
+          onClick={updateCourse}
+        >
+          Update
+        </Button>
+      </h5>
+      <br />
+      
+      <FormControl
+        value={course.name}
+        className="mb-2"
+        onChange={(e) => setCourse({ ...course, name: e.target.value })}
+        placeholder="Course Name"
+      />
+      <FormControl
+        value={course.description}
+        as="textarea"
+        rows={3}
+        className="mb-2"
+        onChange={(e) => setCourse({ ...course, description: e.target.value })}
+        placeholder="Course Description"
+      />
+      
+      <hr />
+      
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
       <hr />
+      
       <div id="wd-dashboard-courses">
         <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4">
-          {courses.map((course) => (
-            <Col key={course._id}>
-              <Card className="h-100" style={{ height: "400px" }}>
+          {courses.map((c: Course) => (
+            <Col key={c._id} className="wd-dashboard-course" style={{ width: "300px" }}>
+              <Card>
                 <Link
-                  href={`/Courses/${course._id}/Home`}
-                  className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column"
+                  href={`/Courses/${c._id}/Home`}
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
-                  <Card.Img variant="top" src="/images/reactjs.jpg" height="160px" />
-                  <Card.Body className="d-flex flex-column flex-grow-1">
+                  <Card.Img variant="top" src="/images/reactjs.jpg" height={160} />
+                  <Card.Body>
                     <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                      {course.name}
+                      {c.name}
                     </Card.Title>
                     <Card.Text
-                      className="wd-dashboard-course-description overflow-hidden flex-grow-1"
+                      className="wd-dashboard-course-description overflow-hidden"
                       style={{ height: "100px" }}
                     >
-                      {course.description}
+                      {c.description}
                     </Card.Text>
-                    <Button variant="primary" className="mt-auto">Go</Button>
+                    <Button variant="primary">Go</Button>
+                    <Button
+                      variant="warning"
+                      className="float-end me-2"
+                      id="wd-edit-course-click"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setCourse(c);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="float-end"
+                      id="wd-delete-course-click"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        deleteCourse(c._id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </Card.Body>
                 </Link>
               </Card>

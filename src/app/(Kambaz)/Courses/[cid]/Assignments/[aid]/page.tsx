@@ -2,8 +2,8 @@
 
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
 import Link from "next/link";
-import * as db from "../../../../Database";
 
 interface Assignment {
   _id: string;
@@ -17,8 +17,14 @@ interface Assignment {
 }
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
-  const assignment = db.assignments.find((assignment: Assignment) => assignment._id === aid) as Assignment;
+  const { cid, aid } = useParams() as { cid: string; aid: string };
+  const { assignments } = useSelector(
+    (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
+      state.assignmentsReducer
+  );
+  
+  // Find assignment in Redux state (works for both DB and newly created assignments)
+  const assignment = assignments.find((a: Assignment) => a._id === aid) as Assignment;
 
   if (!assignment) {
     return <div>Assignment not found</div>;
