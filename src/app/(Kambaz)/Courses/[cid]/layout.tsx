@@ -3,6 +3,7 @@ import CourseNavigation from "./Navigation";
 import { FaAlignJustify } from "react-icons/fa";
 import { courses } from "../../Database";
 import Breadcrumb from "@/app/(Kambaz)/Courses/[cid]/Breadcrumb";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default async function CoursesLayout({
   children,
@@ -21,12 +22,14 @@ export default async function CoursesLayout({
         {course && course.name} <Breadcrumb />
       </h2>
       <hr />
-      <div className="d-flex">
-        <div className="d-none d-md-block">
-          <CourseNavigation cid={cid} />
+      <ProtectedRoute cid={cid}>
+        <div className="d-flex">
+          <div className="d-none d-md-block">
+            <CourseNavigation cid={cid} />
+          </div>
+          <div className="flex-fill">{children}</div>
         </div>
-        <div className="flex-fill">{children}</div>
-      </div>
+      </ProtectedRoute>
     </div>
   );
 }
