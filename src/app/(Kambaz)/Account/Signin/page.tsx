@@ -6,24 +6,33 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import Link from "next/link";
-import * as db from "../../Database";
+import * as client from "../client";
 
 export default function Signin() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const signin = () => {
-    const user = db.users.find(
-      (u: { username: string; password: string }) =>
-        u.username === credentials.username && u.password === credentials.password
-    );
-    
-    if (user) {
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+      if (!user) {
+        alert("Invalid username or password");
+        return;
+      }
       dispatch(setCurrentUser(user));
-      router.push("/Account/Profile");
-    } else {
-      alert("Invalid username or password");
+      router.push("/Dashboard");
+    } catch (error: any) {
+      console.error("Signin error:", error);
+      if (error.response?.status === 401) {
+        alert(error.response.data?.message || "Invalid username or password");
+      } else if (error.response?.status) {
+        alert(`Error: ${error.response.data?.message || "An error occurred during sign in"}`);
+      } else if (error.request) {
+        alert("Unable to connect to server. Please check if the server is running.");
+      } else {
+        alert("An error occurred during sign in");
+      }
     }
   };
 

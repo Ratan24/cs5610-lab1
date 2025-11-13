@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { Card, Row, Col, Button, FormControl } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { enrollInCourse, unenrollFromCourse } from "./enrollmentsReducer";
-import * as db from "../Database";
+import { setEnrollments, enrollInCourse, unenrollFromCourse } from "./enrollmentsReducer";
+import { setCourses, addNewCourse, deleteCourse, updateCourse } from "../Courses/reducer";
+import * as client from "../Courses/client";
+import { RootState } from "../store";
 
 interface Course {
   _id: string;
@@ -30,7 +32,7 @@ interface Enrollment {
 }
 
 export default function Dashboard() {
-  const [courses, setCourses] = useState<Course[]>(db.courses as Course[]);
+  const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const [course, setCourse] = useState<Course>({
     _id: "0",
     name: "New Course",
@@ -42,42 +44,58 @@ export default function Dashboard() {
   });
   const [showAllCourses, setShowAllCourses] = useState(true);
 
-  const { currentUser } = useSelector(
-    (state: { accountReducer: { currentUser: User | null } }) =>
-      state.accountReducer
-  );
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
 
-  const { enrollments } = useSelector(
-    (state: { enrollmentsReducer: { enrollments: Enrollment[] } }) =>
-      state.enrollmentsReducer
-  );
+  const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
 
   const dispatch = useDispatch();
 
   const isFaculty = currentUser?.role === "FACULTY";
 
-  const addNewCourse = () => {
-    const newCourse = {
-      ...course,
-      _id: new Date().getTime().toString(),
-    };
-    setCourses([...courses, newCourse]);
+  const fetchCourses = async () => {
+    try {
+      const courses = await client.findMyCourses();
+      dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
+  const fetchEnrollments = async () => {
+    try {
+      const enrollments = await client.findEnrollmentsForCurrentUser();
+      dispatch(setEnrollments(enrollments));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
+  useEffect(() => {
+    fetchCourses();
+    if (currentUser) {
+      fetchEnrollments();
+    }
+  }, [currentUser]);
+
+  const onAddNewCourse = async () => {
+    const newCourse = await client.createCourse(course);
+    dispatch(setCourses([...courses, newCourse]));
+  };
+
+  const onDeleteCourse = async (courseId: string) => {
+    const status = await client.deleteCourse(courseId);
+    dispatch(setCourses(courses.filter((course) => course._id !== courseId)));
+  };
+
+  const onUpdateCourse = async () => {
+    await client.updateCourse(course);
+    dispatch(setCourses(courses.map((c) => {
+      if (c._id === course._id) {
+        return course;
+      } else {
+        return c;
+      }
+    })));
   };
 
   // Check if user is enrolled in a course
@@ -87,6 +105,31 @@ export default function Dashboard() {
       (enrollment) =>
         enrollment.user === currentUser._id && enrollment.course === courseId
     );
+  };
+
+  const onEnroll = async (courseId: string) => {
+    if (!currentUser) return;
+    try {
+      const enrollment = await client.enrollInCourse(courseId);
+      dispatch(setEnrollments([...enrollments, enrollment]));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onUnenroll = async (courseId: string) => {
+    if (!currentUser) return;
+    try {
+      await client.unenrollFromCourse(courseId);
+      dispatch(setEnrollments(
+        enrollments.filter(
+          (enrollment) =>
+            !(enrollment.user === currentUser._id && enrollment.course === courseId)
+        )
+      ));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Filter courses based on showAllCourses toggle
@@ -107,14 +150,14 @@ export default function Dashboard() {
             <Button
               className="btn btn-primary float-end"
               id="wd-add-new-course-click"
-              onClick={addNewCourse}
+              onClick={onAddNewCourse}
             >
               Add
             </Button>
             <Button
               className="btn btn-warning float-end me-2"
               id="wd-update-course-click"
-              onClick={updateCourse}
+              onClick={onUpdateCourse}
             >
               Update
             </Button>
@@ -206,7 +249,7 @@ export default function Dashboard() {
                           id="wd-delete-course-click"
                           onClick={(event) => {
                             event.preventDefault();
-                            deleteCourse(c._id);
+                            onDeleteCourse(c._id);
                           }}
                         >
                           Delete
@@ -223,12 +266,7 @@ export default function Dashboard() {
                             className="float-end"
                             onClick={(event) => {
                               event.preventDefault();
-                              dispatch(
-                                unenrollFromCourse({
-                                  userId: currentUser._id,
-                                  courseId: c._id,
-                                })
-                              );
+                              onUnenroll(c._id);
                             }}
                           >
                             Unenroll
@@ -239,12 +277,7 @@ export default function Dashboard() {
                             className="float-end"
                             onClick={(event) => {
                               event.preventDefault();
-                              dispatch(
-                                enrollInCourse({
-                                  userId: currentUser._id,
-                                  courseId: c._id,
-                                })
-                              );
+                              onEnroll(c._id);
                             }}
                           >
                             Enroll

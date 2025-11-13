@@ -1,9 +1,12 @@
 "use client";
 
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useParams, useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import * as client from "../../../client";
+import { updateAssignment, setAssignments } from "../reducer";
 
 interface Assignment {
   _id: string;
@@ -18,31 +21,95 @@ interface Assignment {
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams() as { cid: string; aid: string };
+  const router = useRouter();
+  const dispatch = useDispatch();
   const { assignments } = useSelector(
     (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
       state.assignmentsReducer
   );
   
-  // Find assignment in Redux state (works for both DB and newly created assignments)
-  const assignment = assignments.find((a: Assignment) => a._id === aid) as Assignment;
+  const [assignment, setAssignment] = useState<Assignment | null>(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState<number>(100);
+  const [dueDate, setDueDate] = useState("");
+  const [availableFromDate, setAvailableFromDate] = useState("");
+  const [availableUntilDate, setAvailableUntilDate] = useState("");
+
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      // First check Redux state
+      let foundAssignment = assignments.find((a: Assignment) => a._id === aid) as Assignment;
+      
+      // If not found, fetch from server
+      if (!foundAssignment) {
+        foundAssignment = await client.findAssignmentById(aid);
+      }
+      
+      if (foundAssignment) {
+        setAssignment(foundAssignment);
+        setName(foundAssignment.name || "");
+        setDescription(foundAssignment.description || "");
+        setPoints(foundAssignment.points || 100);
+        setDueDate(foundAssignment.dueDate || "");
+        setAvailableFromDate(foundAssignment.availableFromDate || "");
+        setAvailableUntilDate(foundAssignment.availableUntilDate || "");
+      }
+    };
+    
+    fetchAssignment();
+  }, [aid, assignments]);
 
   if (!assignment) {
     return <div>Assignment not found</div>;
   }
 
+  const onSave = async () => {
+    const updatedAssignment: Assignment = {
+      ...assignment,
+      name,
+      description,
+      points,
+      dueDate,
+      availableFromDate,
+      availableUntilDate,
+    };
+    
+    await client.updateAssignment(updatedAssignment);
+    dispatch(updateAssignment(updatedAssignment));
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
   return (
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue={assignment.name} className="form-control mb-3" />
+      <input 
+        id="wd-name" 
+        value={name} 
+        onChange={(e) => setName(e.target.value)}
+        className="form-control mb-3" 
+      />
 
-      <textarea id="wd-description" className="form-control mb-3" rows={5} defaultValue={assignment.description} />
+      <textarea 
+        id="wd-description" 
+        className="form-control mb-3" 
+        rows={5} 
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
       <Row className="mb-3">
         <Col md={3} className="text-end">
           <label htmlFor="wd-points">Points</label>
         </Col>
         <Col md={9}>
-          <input id="wd-points" defaultValue={assignment.points || ""} className="form-control" />
+          <input 
+            id="wd-points" 
+            type="number"
+            value={points || ""} 
+            onChange={(e) => setPoints(parseInt(e.target.value) || 0)}
+            className="form-control" 
+          />
         </Col>
       </Row>
 
@@ -107,7 +174,13 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-due-date">Due</label>
         </Col>
         <Col md={6}>
-          <input type="date" id="wd-due-date" defaultValue={assignment.dueDate || ""} className="form-control" />
+          <input 
+            type="date" 
+            id="wd-due-date" 
+            value={dueDate || ""} 
+            onChange={(e) => setDueDate(e.target.value)}
+            className="form-control" 
+          />
         </Col>
         <Col md={3}>
           <input type="time" id="wd-due-time" defaultValue="23:59" className="form-control" />
@@ -119,7 +192,13 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-from">Available from</label>
         </Col>
         <Col md={6}>
-          <input type="date" id="wd-available-from" defaultValue={assignment.availableFromDate || ""} className="form-control" />
+          <input 
+            type="date" 
+            id="wd-available-from" 
+            value={availableFromDate || ""} 
+            onChange={(e) => setAvailableFromDate(e.target.value)}
+            className="form-control" 
+          />
         </Col>
         <Col md={3}>
           <input type="time" id="wd-available-from-time" defaultValue="00:00" className="form-control" />
@@ -131,7 +210,13 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-until">Until</label>
         </Col>
         <Col md={6}>
-          <input type="date" id="wd-available-until" defaultValue={assignment.availableUntilDate || ""} className="form-control" />
+          <input 
+            type="date" 
+            id="wd-available-until" 
+            value={availableUntilDate || ""} 
+            onChange={(e) => setAvailableUntilDate(e.target.value)}
+            className="form-control" 
+          />
         </Col>
         <Col md={3}>
           <input type="time" id="wd-available-until-time" defaultValue="23:59" className="form-control" />
@@ -144,9 +229,7 @@ export default function AssignmentEditor() {
         <Link href={`/Courses/${cid}/Assignments`}>
           <Button variant="secondary" className="me-2">Cancel</Button>
         </Link>
-        <Link href={`/Courses/${cid}/Assignments`}>
-          <Button variant="danger">Save</Button>
-        </Link>
+        <Button variant="danger" onClick={onSave}>Save</Button>
       </div>
     </div>
   );

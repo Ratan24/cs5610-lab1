@@ -6,8 +6,9 @@ import { FaSearch } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { addAssignment, deleteAssignment, updateAssignment, editAssignment } from "./reducer";
+import { useState, useEffect } from "react";
+import { setAssignments, addAssignment, deleteAssignment, updateAssignment, editAssignment } from "./reducer";
+import * as client from "../../client";
 import GreenCheckmark from "../Modules/GreenCheckmark";
 import AssignmentControls from "./AssignmentControls";
 import AssignmentControlButtons from "./AssignmentControlButtons";
@@ -47,6 +48,42 @@ export default function Assignments() {
   // Check if user is FACULTY
   const isFaculty = currentUser?.role === "FACULTY";
 
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
+
+  const onCreateAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = {
+      name: assignmentName,
+      course: cid,
+      points: 100,
+      dueDate: new Date().toISOString().split('T')[0],
+      description: "",
+      availableFromDate: "",
+      availableUntilDate: "",
+    };
+    const assignment = await client.createAssignmentForCourse(cid, newAssignment);
+    dispatch(setAssignments([...assignments, assignment]));
+    setAssignmentName("");
+  };
+
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(setAssignments(assignments.filter((a: Assignment) => a._id !== assignmentId)));
+  };
+
+  const onUpdateAssignment = async (assignment: Assignment) => {
+    await client.updateAssignment(assignment);
+    const newAssignments = assignments.map((a: Assignment) => a._id === assignment._id ? assignment : a);
+    dispatch(setAssignments(newAssignments));
+  };
+
   return (
     <div id="wd-assignments">
       {/* Only show controls for FACULTY */}
@@ -54,15 +91,7 @@ export default function Assignments() {
         <AssignmentControls
           assignmentName={assignmentName}
           setAssignmentName={setAssignmentName}
-          addAssignment={() => {
-            dispatch(addAssignment({ 
-              name: assignmentName,
-              course: cid,
-              points: 100,
-              dueDate: new Date().toISOString().split('T')[0],
-            }));
-            setAssignmentName("");
-          }}
+          addAssignment={onCreateAssignmentForCourse}
         />
       )}
 
@@ -91,9 +120,7 @@ export default function Assignments() {
 
       {/* Assignments List */}
       <div className="wd-assignments-list">
-        {assignments
-          .filter((assignment: Assignment) => assignment.course === cid)
-          .map((assignment: Assignment) => (
+        {assignments.map((assignment: Assignment) => (
             <div key={assignment._id} className="wd-assignment-item position-relative border-bottom pb-3 mb-3">
               <div className="wd-green-line position-absolute" style={{
                 left: '20px',
@@ -123,7 +150,7 @@ export default function Assignments() {
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
-                              dispatch(updateAssignment({ ...assignment, editing: false }));
+                              onUpdateAssignment({ ...assignment, editing: false });
                             }
                           }}
                           value={assignment.name}
@@ -145,7 +172,7 @@ export default function Assignments() {
                   {isFaculty && (
                     <AssignmentControlButtons
                       assignmentId={assignment._id}
-                      deleteAssignment={(assignmentId) => dispatch(deleteAssignment(assignmentId))}
+                      deleteAssignment={(assignmentId) => onRemoveAssignment(assignmentId)}
                       editAssignment={(assignmentId) => dispatch(editAssignment(assignmentId))}
                     />
                   )}
