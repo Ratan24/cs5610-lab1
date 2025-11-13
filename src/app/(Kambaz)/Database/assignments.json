@@ -1,0 +1,92 @@
+[
+    {
+      "_id": "A101",
+      "name": "Assignment 1 - Rocket Propulsion Basics",
+      "description": "Complete the following problems related to basic rocket propulsion principles. Show all your work and calculations.",
+      "course": "RS101",
+      "points": 100,
+      "dueDate": "2024-02-15",
+      "availableFromDate": "2024-02-01",
+      "availableUntilDate": "2024-02-15"
+    },
+    {
+      "_id": "A102",
+      "name": "Assignment 2 - Fuel Analysis",
+      "description": "Analyze different types of rocket fuels and their properties. Include efficiency calculations and recommendations.",
+      "course": "RS101",
+      "points": 150,
+      "dueDate": "2024-03-01",
+      "availableFromDate": "2024-02-15",
+      "availableUntilDate": "2024-03-01"
+    },
+    {
+      "_id": "A103",
+      "name": "Assignment 3 - Nozzle Design Project",
+      "description": "Design a rocket nozzle for a specific mission profile. Include calculations, diagrams, and performance analysis.",
+      "course": "RS101",
+      "points": 200,
+      "dueDate": "2024-03-15",
+      "availableFromDate": "2024-03-01",
+      "availableUntilDate": "2024-03-15"
+    },
+    {
+      "_id": "A201",
+      "name": "Assignment 1 - Aerodynamic Analysis",
+      "description": "Analyze the aerodynamic characteristics of different spacecraft configurations.",
+      "course": "RS102",
+      "points": 120,
+      "dueDate": "2024-02-20",
+      "availableFromDate": "2024-02-05",
+      "availableUntilDate": "2024-02-20"
+    },
+    {
+      "_id": "A202",
+      "name": "Assignment 2 - Flow Analysis",
+      "description": "Study subsonic and supersonic flow patterns around spacecraft surfaces.",
+      "course": "RS102",
+      "points": 180,
+      "dueDate": "2024-03-05",
+      "availableFromDate": "2024-02-20",
+      "availableUntilDate": "2024-03-05"
+    },
+    {
+      "_id": "A203",
+      "name": "Assignment 3 - Thermal Analysis",
+      "description": "Analyze aerodynamic heating effects and design thermal protection systems.",
+      "course": "RS102",
+      "points": 160,
+      "dueDate": "2024-03-20",
+      "availableFromDate": "2024-03-05",
+      "availableUntilDate": "2024-03-20"
+    },
+    {
+      "_id": "A301",
+      "name": "Assignment 1 - Structural Design",
+      "description": "Design a spacecraft structure for a specific mission. Include material selection and stress analysis.",
+      "course": "RS103",
+      "points": 250,
+      "dueDate": "2024-02-25",
+      "availableFromDate": "2024-02-10",
+      "availableUntilDate": "2024-02-25"
+    },
+    {
+      "_id": "A302",
+      "name": "Assignment 2 - Orbital Mechanics",
+      "description": "Calculate orbital parameters and plan a spacecraft mission trajectory.",
+      "course": "RS103",
+      "points": 220,
+      "dueDate": "2024-03-10",
+      "availableFromDate": "2024-02-25",
+      "availableUntilDate": "2024-03-10"
+    },
+    {
+      "_id": "A303",
+      "name": "Assignment 3 - Systems Integration",
+      "description": "Integrate various spacecraft subsystems into a cohesive mission design.",
+      "course": "RS103",
+      "points": 300,
+      "dueDate": "2024-03-25",
+      "availableFromDate": "2024-03-10",
+      "availableUntilDate": "2024-03-25"
+    }
+  ]

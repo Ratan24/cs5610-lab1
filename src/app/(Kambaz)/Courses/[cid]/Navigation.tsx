@@ -1,18 +1,36 @@
+"use client";
+import { ListGroup } from "react-bootstrap";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function CourseNavigation({ cid }: { cid: string }) {
-    return (
-    <div id="wd-courses-navigation">
-    <Link href={`/Courses/${cid}/Home`} id="wd-course-home-link">Home</Link><br/>
-    <Link href={`/Courses/${cid}/Modules`} id="wd-course-modules-link">Modules
-    </Link><br/>
-    <Link href={`/Courses/${cid}/Piazza`} id="wd-course-piazza-link">Piazza</Link><br/>
-    <Link href={`/Courses/${cid}/Zoom`} id="wd-course-zoom-link">Zoom</Link><br/>
-    <Link href={`/Courses/${cid}/Assignments`} id="wd-course-quizzes-link">
-    Assignments</Link><br/>
-    <Link href={`/Courses/${cid}/Quizzes`} id="wd-course-assignments-link">Quizzes
-    </Link><br/>
-    <Link href={`/Courses/${cid}/Grades`} id="wd-course-grades-link">Grades</Link><br/>
-    <Link href={`/Courses/${cid}/People/Table`} id="wd-course-people-link">People</Link><br/>
-    </div>
-    );}
-    
+  const pathname = usePathname();
+  const links = [
+    "Home",
+    "Modules",
+    "Piazza",
+    "Zoom",
+    "Assignments",
+    "Quizzes",
+    "Grades",
+    "People",
+  ];
+  return (
+    <ListGroup className="wd list-group fs-5 rounded-0">
+      {links.map((link) => (
+        <ListGroup.Item
+          key={link}
+          active={pathname.includes(link)}
+          className="border-0"
+        >
+          <Link
+            href={`/Courses/${cid}/${link}`}
+            className="text-decoration-none text-dark"
+          >
+            {link}
+          </Link>
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
+  );
+}

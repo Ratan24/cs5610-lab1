@@ -300,7 +300,7 @@ export default function Lab1() {
           <Link href="https://www.lipsum.com" id="wd-lipsum">click here</Link>
           to get dummy text<br/>
 
-          Please check out <Link href="https://github.com/Ratan24/cs5610-lab1" target="_blank" rel="noopener noreferrer" id="wd-github">
+          Please check out <Link href="https://github.com/Ratan24/cs5610-lab1/tree/a3" target="_blank" rel="noopener noreferrer" id="wd-github">
               My GitHub Repository
             </Link>
         </>
