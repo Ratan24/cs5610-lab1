@@ -3,7 +3,13 @@
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { setModules, addModule, deleteModule, updateModule, editModule } from "./reducer";
+import {
+  setModules,
+  addModule,
+  deleteModule,
+  updateModule,
+  editModule,
+} from "./reducer";
 import * as client from "../../client";
 import { BsGripVertical } from "react-icons/bs";
 import { ListGroup, ListGroupItem, FormControl } from "react-bootstrap";
@@ -44,7 +50,10 @@ export default function Modules() {
 
   const fetchModules = async () => {
     const modules = await client.findModulesForCourse(cid as string);
-    dispatch(setModules(modules));
+    dispatch(setModules(modules.map((m: any) => ({
+      ...m,
+      lessons: m.lessons ?? [],
+    }))));
   };
 
   useEffect(() => {
@@ -55,18 +64,48 @@ export default function Modules() {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
     const module = await client.createModuleForCourse(cid, newModule);
-    dispatch(setModules([...modules, module]));
+    dispatch(
+      setModules([
+        ...modules.map((m: any) => ({
+          ...m,
+          lessons: m.lessons ?? [],
+        })),
+        {
+          ...module,
+          lessons: module.lessons ?? [],
+        },
+      ])
+    );
     setModuleName("");
   };
 
   const onRemoveModule = async (moduleId: string) => {
     await client.deleteModule(moduleId);
-    dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+    dispatch(
+      setModules(
+        modules
+          .filter((m: any) => m._id !== moduleId)
+          .map((m: any) => ({
+            ...m,
+            lessons: m.lessons ?? [],
+          }))
+      )
+    );
   };
 
   const onUpdateModule = async (module: any) => {
     await client.updateModule(module);
-    const newModules = modules.map((m: any) => m._id === module._id ? module : m);
+    const newModules = modules.map((m: any) =>
+      m._id === module._id
+        ? {
+            ...module,
+            lessons: module.lessons ?? [],
+          }
+        : {
+            ...m,
+            lessons: m.lessons ?? [],
+          }
+    );
     dispatch(setModules(newModules));
   };
 
@@ -80,12 +119,16 @@ export default function Modules() {
             setModuleName={setModuleName}
             addModule={onCreateModuleForCourse}
           />
-          <br /><br /><br /><br />
+          <br />
+          <br />
+          <br />
+          <br />
         </>
       )}
-      
+
       <ListGroup className="rounded-0" id="wd-modules">
-        {modules.map((module: {
+        {modules.map(
+          (module: {
             _id: string;
             name: string;
             course: string;
@@ -132,20 +175,26 @@ export default function Modules() {
                   />
                 )}
               </div>
-              
+
               {module.lessons && (
                 <ListGroup className="wd-lessons rounded-0">
-                  {module.lessons.map((lesson: { _id: string; name: string }) => (
-                    <ListGroupItem key={lesson._id} className="wd-lesson p-3 ps-1">
-                      <BsGripVertical className="me-2 fs-3" />
-                      {lesson.name}
-                      <LessonControlButtons />
-                    </ListGroupItem>
-                  ))}
+                  {module.lessons.map(
+                    (lesson: { _id: string; name: string }) => (
+                      <ListGroupItem
+                        key={lesson._id}
+                        className="wd-lesson p-3 ps-1"
+                      >
+                        <BsGripVertical className="me-2 fs-3" />
+                        {lesson.name}
+                        <LessonControlButtons />
+                      </ListGroupItem>
+                    )
+                  )}
                 </ListGroup>
               )}
             </ListGroupItem>
-          ))}
+          )
+        )}
       </ListGroup>
     </div>
   );

@@ -13,10 +13,10 @@ interface Assignment {
   name: string;
   description: string;
   course: string;
-  points?: number;
-  dueDate?: string;
-  availableFromDate?: string;
-  availableUntilDate?: string;
+  points: number;
+  dueDate: string;
+  availableFromDate: string;
+  availableUntilDate: string;
 }
 
 export default function AssignmentEditor() {
@@ -27,7 +27,7 @@ export default function AssignmentEditor() {
     (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
       state.assignmentsReducer
   );
-  
+
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -39,13 +39,15 @@ export default function AssignmentEditor() {
   useEffect(() => {
     const fetchAssignment = async () => {
       // First check Redux state
-      let foundAssignment = assignments.find((a: Assignment) => a._id === aid) as Assignment;
-      
+      let foundAssignment = assignments.find(
+        (a: Assignment) => a._id === aid
+      ) as Assignment;
+
       // If not found, fetch from server
       if (!foundAssignment) {
         foundAssignment = await client.findAssignmentById(aid);
       }
-      
+
       if (foundAssignment) {
         setAssignment(foundAssignment);
         setName(foundAssignment.name || "");
@@ -56,7 +58,7 @@ export default function AssignmentEditor() {
         setAvailableUntilDate(foundAssignment.availableUntilDate || "");
       }
     };
-    
+
     fetchAssignment();
   }, [aid, assignments]);
 
@@ -66,15 +68,16 @@ export default function AssignmentEditor() {
 
   const onSave = async () => {
     const updatedAssignment: Assignment = {
-      ...assignment,
+      _id: assignment._id,
+      course: assignment.course,
       name,
       description,
-      points,
-      dueDate,
-      availableFromDate,
-      availableUntilDate,
+      points: points ?? 100,
+      dueDate: dueDate ?? "",
+      availableFromDate: availableFromDate ?? "",
+      availableUntilDate: availableUntilDate ?? "",
     };
-    
+
     await client.updateAssignment(updatedAssignment);
     dispatch(updateAssignment(updatedAssignment));
     router.push(`/Courses/${cid}/Assignments`);
@@ -83,17 +86,17 @@ export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">Assignment Name</label>
-      <input 
-        id="wd-name" 
-        value={name} 
+      <input
+        id="wd-name"
+        value={name}
         onChange={(e) => setName(e.target.value)}
-        className="form-control mb-3" 
+        className="form-control mb-3"
       />
 
-      <textarea 
-        id="wd-description" 
-        className="form-control mb-3" 
-        rows={5} 
+      <textarea
+        id="wd-description"
+        className="form-control mb-3"
+        rows={5}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
@@ -103,12 +106,12 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-points">Points</label>
         </Col>
         <Col md={9}>
-          <input 
-            id="wd-points" 
+          <input
+            id="wd-points"
             type="number"
-            value={points || ""} 
+            value={points || ""}
             onChange={(e) => setPoints(parseInt(e.target.value) || 0)}
-            className="form-control" 
+            className="form-control"
           />
         </Col>
       </Row>
@@ -150,11 +153,31 @@ export default function AssignmentEditor() {
             </select>
             <label>Online Entry Options</label>
             <div>
-              <Form.Check type="checkbox" id="wd-text-entry" label="Text Entry" />
-              <Form.Check type="checkbox" id="wd-website-url" label="Website URL" />
-              <Form.Check type="checkbox" id="wd-media-recordings" label="Media Recordings" />
-              <Form.Check type="checkbox" id="wd-student-annotation" label="Student Annotation" />
-              <Form.Check type="checkbox" id="wd-file-upload" label="File Uploads" />
+              <Form.Check
+                type="checkbox"
+                id="wd-text-entry"
+                label="Text Entry"
+              />
+              <Form.Check
+                type="checkbox"
+                id="wd-website-url"
+                label="Website URL"
+              />
+              <Form.Check
+                type="checkbox"
+                id="wd-media-recordings"
+                label="Media Recordings"
+              />
+              <Form.Check
+                type="checkbox"
+                id="wd-student-annotation"
+                label="Student Annotation"
+              />
+              <Form.Check
+                type="checkbox"
+                id="wd-file-upload"
+                label="File Uploads"
+              />
             </div>
           </div>
         </Col>
@@ -165,7 +188,11 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-assign-to">Assign to</label>
         </Col>
         <Col md={9}>
-          <input id="wd-assign-to" defaultValue="Everyone" className="form-control" />
+          <input
+            id="wd-assign-to"
+            defaultValue="Everyone"
+            className="form-control"
+          />
         </Col>
       </Row>
 
@@ -174,16 +201,21 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-due-date">Due</label>
         </Col>
         <Col md={6}>
-          <input 
-            type="date" 
-            id="wd-due-date" 
-            value={dueDate || ""} 
+          <input
+            type="date"
+            id="wd-due-date"
+            value={dueDate || ""}
             onChange={(e) => setDueDate(e.target.value)}
-            className="form-control" 
+            className="form-control"
           />
         </Col>
         <Col md={3}>
-          <input type="time" id="wd-due-time" defaultValue="23:59" className="form-control" />
+          <input
+            type="time"
+            id="wd-due-time"
+            defaultValue="23:59"
+            className="form-control"
+          />
         </Col>
       </Row>
 
@@ -192,16 +224,21 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-from">Available from</label>
         </Col>
         <Col md={6}>
-          <input 
-            type="date" 
-            id="wd-available-from" 
-            value={availableFromDate || ""} 
+          <input
+            type="date"
+            id="wd-available-from"
+            value={availableFromDate || ""}
             onChange={(e) => setAvailableFromDate(e.target.value)}
-            className="form-control" 
+            className="form-control"
           />
         </Col>
         <Col md={3}>
-          <input type="time" id="wd-available-from-time" defaultValue="00:00" className="form-control" />
+          <input
+            type="time"
+            id="wd-available-from-time"
+            defaultValue="00:00"
+            className="form-control"
+          />
         </Col>
       </Row>
 
@@ -210,16 +247,21 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-available-until">Until</label>
         </Col>
         <Col md={6}>
-          <input 
-            type="date" 
-            id="wd-available-until" 
-            value={availableUntilDate || ""} 
+          <input
+            type="date"
+            id="wd-available-until"
+            value={availableUntilDate || ""}
             onChange={(e) => setAvailableUntilDate(e.target.value)}
-            className="form-control" 
+            className="form-control"
           />
         </Col>
         <Col md={3}>
-          <input type="time" id="wd-available-until-time" defaultValue="23:59" className="form-control" />
+          <input
+            type="time"
+            id="wd-available-until-time"
+            defaultValue="23:59"
+            className="form-control"
+          />
         </Col>
       </Row>
 
@@ -227,9 +269,13 @@ export default function AssignmentEditor() {
 
       <div className="d-flex justify-content-end">
         <Link href={`/Courses/${cid}/Assignments`}>
-          <Button variant="secondary" className="me-2">Cancel</Button>
+          <Button variant="secondary" className="me-2">
+            Cancel
+          </Button>
         </Link>
-        <Button variant="danger" onClick={onSave}>Save</Button>
+        <Button variant="danger" onClick={onSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

@@ -5,21 +5,9 @@ import { Card, Row, Col, Button, FormControl } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setEnrollments, enrollInCourse, unenrollFromCourse } from "./enrollmentsReducer";
-import { setCourses, addNewCourse, deleteCourse, updateCourse } from "../Courses/reducer";
+import { setCourses, addNewCourse, deleteCourse, updateCourse, Course } from "../Courses/reducer";
 import * as client from "../Courses/client";
 import { RootState } from "../store";
-
-interface Course {
-  _id: string;
-  name: string;
-  number: string;
-  startDate: string;
-  endDate: string;
-  image?: string;
-  description: string;
-  department?: string;
-  credits?: number;
-}
 
 interface User {
   _id: string;

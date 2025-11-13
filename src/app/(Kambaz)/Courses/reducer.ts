@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Course {
+export interface Course {
   _id: string;
   name: string;
   number?: string;
@@ -44,4 +44,3 @@ const coursesSlice = createSlice({
 export const { setCourses, addNewCourse, deleteCourse, updateCourse } =
   coursesSlice.actions;
 export default coursesSlice.reducer;
-
