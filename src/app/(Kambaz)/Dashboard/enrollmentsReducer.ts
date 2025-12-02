@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Enrollment {
-  _id?: string;
-  user: string;
-  course: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type EnrollmentOrCourse = any;
 
 interface EnrollmentsState {
-  enrollments: Enrollment[];
+  enrollments: EnrollmentOrCourse[];
 }
 
 const initialState: EnrollmentsState = {
@@ -18,7 +15,7 @@ const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
-    setEnrollments: (state, action: PayloadAction<Enrollment[]>) => {
+    setEnrollments: (state, action: PayloadAction<EnrollmentOrCourse[]>) => {
       state.enrollments = action.payload;
     },
     enrollInCourse: (

@@ -19,6 +19,11 @@ interface Assignment {
   availableUntilDate: string;
 }
 
+interface User {
+  _id: string;
+  role: string;
+}
+
 export default function AssignmentEditor() {
   const { cid, aid } = useParams() as { cid: string; aid: string };
   const router = useRouter();
@@ -27,6 +32,14 @@ export default function AssignmentEditor() {
     (state: { assignmentsReducer: { assignments: Assignment[] } }) =>
       state.assignmentsReducer
   );
+
+  const { currentUser } = useSelector(
+    (state: { accountReducer: { currentUser: User | null } }) =>
+      state.accountReducer
+  );
+
+  // Check if user can edit (FACULTY, TA, ADMIN)
+  const canEdit = currentUser?.role === "FACULTY" || currentUser?.role === "TA" || currentUser?.role === "ADMIN";
 
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [name, setName] = useState("");
@@ -91,6 +104,7 @@ export default function AssignmentEditor() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         className="form-control mb-3"
+        disabled={!canEdit}
       />
 
       <textarea
@@ -99,6 +113,7 @@ export default function AssignmentEditor() {
         rows={5}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        disabled={!canEdit}
       />
 
       <Row className="mb-3">
@@ -112,6 +127,7 @@ export default function AssignmentEditor() {
             value={points || ""}
             onChange={(e) => setPoints(parseInt(e.target.value) || 0)}
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -121,7 +137,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-group">Assignment Group</label>
         </Col>
         <Col md={9}>
-          <select id="wd-group" className="form-select">
+          <select id="wd-group" className="form-select" disabled={!canEdit}>
             <option value="ASSIGNMENTS">ASSIGNMENTS</option>
           </select>
         </Col>
@@ -132,7 +148,7 @@ export default function AssignmentEditor() {
           <label htmlFor="wd-display-grade-as">Display Grade as</label>
         </Col>
         <Col md={9}>
-          <select id="wd-display-grade-as" className="form-select">
+          <select id="wd-display-grade-as" className="form-select" disabled={!canEdit}>
             <option value="Percentage">Percentage</option>
             <option value="Points">Points</option>
             <option value="Letter Grade">Letter Grade</option>
@@ -148,7 +164,7 @@ export default function AssignmentEditor() {
         </Col>
         <Col md={9}>
           <div className="border rounded p-3">
-            <select id="wd-submission-type" className="form-select mb-3">
+            <select id="wd-submission-type" className="form-select mb-3" disabled={!canEdit}>
               <option value="Online">Online</option>
             </select>
             <label>Online Entry Options</label>
@@ -157,26 +173,31 @@ export default function AssignmentEditor() {
                 type="checkbox"
                 id="wd-text-entry"
                 label="Text Entry"
+                disabled={!canEdit}
               />
               <Form.Check
                 type="checkbox"
                 id="wd-website-url"
                 label="Website URL"
+                disabled={!canEdit}
               />
               <Form.Check
                 type="checkbox"
                 id="wd-media-recordings"
                 label="Media Recordings"
+                disabled={!canEdit}
               />
               <Form.Check
                 type="checkbox"
                 id="wd-student-annotation"
                 label="Student Annotation"
+                disabled={!canEdit}
               />
               <Form.Check
                 type="checkbox"
                 id="wd-file-upload"
                 label="File Uploads"
+                disabled={!canEdit}
               />
             </div>
           </div>
@@ -192,6 +213,7 @@ export default function AssignmentEditor() {
             id="wd-assign-to"
             defaultValue="Everyone"
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -207,6 +229,7 @@ export default function AssignmentEditor() {
             value={dueDate || ""}
             onChange={(e) => setDueDate(e.target.value)}
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
         <Col md={3}>
@@ -215,6 +238,7 @@ export default function AssignmentEditor() {
             id="wd-due-time"
             defaultValue="23:59"
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -230,6 +254,7 @@ export default function AssignmentEditor() {
             value={availableFromDate || ""}
             onChange={(e) => setAvailableFromDate(e.target.value)}
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
         <Col md={3}>
@@ -238,6 +263,7 @@ export default function AssignmentEditor() {
             id="wd-available-from-time"
             defaultValue="00:00"
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -253,6 +279,7 @@ export default function AssignmentEditor() {
             value={availableUntilDate || ""}
             onChange={(e) => setAvailableUntilDate(e.target.value)}
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
         <Col md={3}>
@@ -261,6 +288,7 @@ export default function AssignmentEditor() {
             id="wd-available-until-time"
             defaultValue="23:59"
             className="form-control"
+            disabled={!canEdit}
           />
         </Col>
       </Row>
@@ -270,12 +298,14 @@ export default function AssignmentEditor() {
       <div className="d-flex justify-content-end">
         <Link href={`/Courses/${cid}/Assignments`}>
           <Button variant="secondary" className="me-2">
-            Cancel
+            {canEdit ? "Cancel" : "Back"}
           </Button>
         </Link>
-        <Button variant="danger" onClick={onSave}>
-          Save
-        </Button>
+        {canEdit && (
+          <Button variant="danger" onClick={onSave}>
+            Save
+          </Button>
+        )}
       </div>
     </div>
   );

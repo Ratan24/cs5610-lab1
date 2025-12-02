@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Lesson { _id: string; name: string }
 interface Module {
   _id: string;
-  lessons: Lesson[];
+  lessons?: Lesson[];
   name: string;
   course: string;
   editing?: boolean;

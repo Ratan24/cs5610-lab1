@@ -11,8 +11,9 @@ interface User {
 }
 
 interface Enrollment {
-  user: string;
-  course: string;
+  _id: string;
+  user?: string;
+  course?: string;
 }
 
 export default function ProtectedRoute({
@@ -42,17 +43,17 @@ export default function ProtectedRoute({
       return;
     }
 
-    // Faculty can access any course
-    const isFaculty = currentUser.role === "FACULTY";
-    if (isFaculty) {
+    // Faculty and TAs can access any course
+    const hasPrivilegedAccess = currentUser.role === "FACULTY" || currentUser.role === "TA" || currentUser.role === "ADMIN";
+    if (hasPrivilegedAccess) {
       setShowAccessDenied(false);
       return;
     }
 
     // Check if student is enrolled
+    // enrollments now contains course objects (from findCoursesForUser)
     const isEnrolled = enrollments.some(
-      (enrollment) =>
-        enrollment.user === currentUser._id && enrollment.course === cid
+      (enrollment) => enrollment._id === cid
     );
 
     if (!isEnrolled) {

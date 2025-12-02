@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Card, Row, Col, Button, FormControl } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setEnrollments, enrollInCourse, unenrollFromCourse } from "./enrollmentsReducer";
+import { setEnrollments } from "./enrollmentsReducer";
 import { setCourses, addNewCourse, deleteCourse, updateCourse, Course } from "../Courses/reducer";
 import * as client from "../Courses/client";
 import { RootState } from "../store";
@@ -15,8 +15,9 @@ interface User {
 }
 
 interface Enrollment {
-  user: string;
-  course: string;
+  _id: string;
+  user?: string;
+  course?: string;
 }
 
 export default function Dashboard() {
@@ -30,7 +31,7 @@ export default function Dashboard() {
     image: "/images/reactjs.jpg",
     description: "New Description",
   });
-  const [showAllCourses, setShowAllCourses] = useState(true);
+  const [showAllCourses, setShowAllCourses] = useState(false);
 
   const { currentUser } = useSelector((state: RootState) => state.accountReducer);
 
@@ -43,6 +44,15 @@ export default function Dashboard() {
   const fetchCourses = async () => {
     try {
       const courses = await client.findMyCourses();
+      dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchAllCourses = async () => {
+    try {
+      const courses = await client.fetchAllCourses();
       dispatch(setCourses(courses));
     } catch (error) {
       console.error(error);
@@ -87,19 +97,21 @@ export default function Dashboard() {
   };
 
   // Check if user is enrolled in a course
+  // enrollments now contains course objects (from findCoursesForUser)
   const isEnrolled = (courseId: string) => {
     if (!currentUser) return false;
-    return enrollments.some(
-      (enrollment) =>
-        enrollment.user === currentUser._id && enrollment.course === courseId
-    );
+    return enrollments.some((enrollment: any) => enrollment._id === courseId);
   };
 
   const onEnroll = async (courseId: string) => {
     if (!currentUser) return;
     try {
-      const enrollment = await client.enrollInCourse(courseId);
-      dispatch(setEnrollments([...enrollments, enrollment]));
+      await client.enrollIntoCourse("current", courseId);
+      // Add the course to enrollments
+      const enrolledCourse = courses.find((c) => c._id === courseId);
+      if (enrolledCourse) {
+        dispatch(setEnrollments([...enrollments, enrolledCourse]));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -108,22 +120,18 @@ export default function Dashboard() {
   const onUnenroll = async (courseId: string) => {
     if (!currentUser) return;
     try {
-      await client.unenrollFromCourse(courseId);
+      await client.unenrollFromCourse("current", courseId);
+      // Remove the course from enrollments
       dispatch(setEnrollments(
-        enrollments.filter(
-          (enrollment) =>
-            !(enrollment.user === currentUser._id && enrollment.course === courseId)
-        )
+        enrollments.filter((enrollment: any) => enrollment._id !== courseId)
       ));
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Filter courses based on showAllCourses toggle
-  const filteredCourses = showAllCourses
-    ? courses
-    : courses.filter((c) => isEnrolled(c._id));
+  // Use courses directly since we fetch the right ones based on toggle
+  const filteredCourses = courses;
 
   return (
     <div id="wd-dashboard">
@@ -179,7 +187,16 @@ export default function Dashboard() {
           <Button
             variant="primary"
             className="float-end"
-            onClick={() => setShowAllCourses(!showAllCourses)}
+            onClick={() => {
+              if (showAllCourses) {
+                // Switching to enrolled courses only
+                fetchCourses();
+              } else {
+                // Switching to all courses
+                fetchAllCourses();
+              }
+              setShowAllCourses(!showAllCourses);
+            }}
           >
             {showAllCourses ? "Enrollments" : "All Courses"}
           </Button>
@@ -245,8 +262,8 @@ export default function Dashboard() {
                       </>
                     )}
 
-                    {/* STUDENT: Enroll/Unenroll buttons */}
-                    {!isFaculty && currentUser && (
+                    {/* STUDENT: Enroll/Unenroll buttons - only show when viewing All Courses */}
+                    {!isFaculty && currentUser && showAllCourses && (
                       <>
                         {isEnrolled(c._id) ? (
                           <Button
